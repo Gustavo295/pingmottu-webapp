@@ -22,14 +22,14 @@ jobs:
         java-version: '17'
     
     - name: Grant execute permission to gradlew
-      run: chmod +x ../backend-java-mottu/gradlew
+      run: chmod +x backend-java-mottu/gradlew
       
     - name: Build with Gradle
       env: 
           SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
           SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
-      run: ../backend-java-mottu/gradlew build
+      run: backend-java-mottu/gradlew build
 
     - name: Find the latest JAR file
       id: find-jar
