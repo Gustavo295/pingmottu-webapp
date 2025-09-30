@@ -21,8 +21,19 @@ jobs:
       with:
         java-version: '17'
     
-    - name: Build with Maven
-      run: mvn clean install
+    - name: Grant execute permission to gradlew
+      run: chmod +x ./gradlew
+      
+    - name: Build with Gradle
+      env: 
+          SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
+          SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+      run: ./gradlew build
+
+    - name: Find the latest JAR file
+      id: find-jar
+      run: echo "JAR=$(find $GITHUB_WORKSPACE/build/libs -name '*.jar' -print -quit)" >> $GITHUB_ENV
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
@@ -30,4 +41,4 @@ jobs:
         app-name: 'ping-mottu'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_1f383d365bc84d4e964fddb6847f4ea0 }}
-        package: '${{ github.workspace }}/target/*.jar'
+        package: ${{ env.JAR }}
