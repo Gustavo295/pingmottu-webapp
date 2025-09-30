@@ -25,15 +25,16 @@ jobs:
       run: chmod +x backend-java-mottu/gradlew
       
     - name: Build with Gradle
+      working-directory: backend-java-mottu
       env: 
-          SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
-          SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
-          SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
-      run: backend-java-mottu/gradlew build
+        SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
+        SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+        SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+      run: ./gradlew build
 
     - name: Find the latest JAR file
       id: find-jar
-      run: echo "JAR=$(find $GITHUB_WORKSPACE/build/libs -name '*.jar' -print -quit)" >> $GITHUB_ENV
+      run: echo "JAR=$(find $GITHUB_WORKSPACE/backend-java-mottu/build/libs -name '*.jar' -print -quit)" >> $GITHUB_ENV
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
