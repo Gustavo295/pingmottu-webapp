@@ -23,13 +23,18 @@
            style="padding:10px; border:1px solid #0d2113; border-radius:6px; font-size:14px;">
     <div th:if="${#fields.hasErrors('cor')}" th:errors="*{cor}" style="color:red"></div>
 
-    <button class="button"
-            style="padding:12px; border:none; border-radius:6px; font-size:15px; font-weight:bold; cursor:pointer; background:#123b1d; color:#6bed8d;">Salvar</button>
+    <div style="display:flex; gap:10px;">
+        <button class="button"
+                style="flex:1; padding:12px; border:none; border-radius:6px; font-size:15px; font-weight:bold; cursor:pointer; background:#123b1d; color:#6bed8d;">
+            Salvar
+        </button>
     
-    <a th:href="@{/condicoes/listar}"
-           style="display:inline-block; text-decoration:none; padding:12px; border:1px solid #123b1d; border-radius:6px; font-size:15px; font-weight:bold; cursor:pointer; background:#f1f1f1; color:#123b1d; margin-left:10px;">
-        Cancelar
-    </a>
+        <a th:href="@{/condicoes/listar}"
+           style="flex:1; display:inline-block; text-align:center; text-decoration:none; padding:12px; border:1px solid #123b1d; border-radius:6px; font-size:15px; font-weight:bold; cursor:pointer; background:#f1f1f1; color:#123b1d;">
+            Cancelar
+        </a>
+    </div>
+
 </form>
 
 <div th:replace="~{fragments/footer :: footer}"></div>
