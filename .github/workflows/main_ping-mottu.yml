@@ -1,3 +1,6 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
 name: 'Build and deploy JAR app to Azure Web App: ping-mottu'
 
 on:
@@ -18,20 +21,8 @@ jobs:
       with:
         java-version: '17'
     
-    - name: Grant execute permission to gradlew
-      run: chmod +x backend-java-mottu/gradlew
-      
-    - name: Build with Gradle
-      working-directory: backend-java-mottu
-      env: 
-        SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
-        SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
-        SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
-      run: ./gradlew build
-
-    - name: Find the latest JAR file
-      id: find-jar
-      run: echo "JAR=$(find $GITHUB_WORKSPACE/backend-java-mottu/build/libs -name '*.jar' -print -quit)" >> $GITHUB_ENV
+    - name: Build with Maven
+      run: mvn clean install
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
@@ -39,4 +30,4 @@ jobs:
         app-name: 'ping-mottu'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_1f383d365bc84d4e964fddb6847f4ea0 }}
-        package: ${{ env.JAR }}
+        package: '${{ github.workspace }}/target/*.jar'
