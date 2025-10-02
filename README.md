@@ -31,6 +31,21 @@ Com o WebApp no Azure, tanto a aplicação quanto os dados ficam armazenados de 
 - SQL
 
 ---
+## 🔀 **Pré-requisitos: Fork e Clonagem do Repositório**
+
+Antes de iniciar o deploy, é necessário ter o repositório do projeto disponível no seu GitHub e clonado localmente.
+
+1. **Fork**
+   - Acesse o repositório original no GitHub.  
+   - Clique no botão **Fork** no canto superior direito.  
+   - O GitHub criará uma cópia do repositório na sua conta.
+
+2. **Clone**
+   - No terminal, execute:  
+   ```bash
+   git clone <link-do-seu-fork>
+   ```
+---
 ## 🌐 **Criação Banco de Dados**
 Para configurar o banco de dados na nuvem, utilizamos um script em PowerShell que automatiza a criação da estrutura.
 
@@ -40,8 +55,8 @@ Para configurar o banco de dados na nuvem, utilizamos um script em PowerShell qu
 
 🚀 **Passo a passo:**
 
-1. Abra o PowerShell em sua máquina.
-2. Navegue até a pasta onde o script foi salvo.
+1. Abra o PowerShell.
+2. Navegue até a pasta onde o script foi salvo com: `cd nome-da-pasta`
 3. Execute o comando:
 ```powershell
 ./create-sql-server.ps1
@@ -61,8 +76,57 @@ Antes de rodar o script, faça login com: `az login`
 ```powershell
 Erro: The server name ... is already in use.
 ```
-O nome do servidor SQL precisa ser único globalmente no Azure.\
-Basta alterar o nome no script e executar novamente.
+O nome do servidor SQL precisa ser único globalmente no Azure. Basta alterar o nome no script e executar novamente.
+
+---
+# 🚀 Deploy da Aplicação no Azure
+
+Este guia mostra como realizar o **deploy da aplicação** utilizando o script fornecido e o GitHub Actions.
 
 ---
 
+## 📋 **Deploy da Aplicação**
+
+🚀 **Passo a passo:**
+
+1. **Editar o repositório no script**  
+   - Atualize no Script "[deploy-pingmottu.sh](deploy-pingmottu.sh)" o **repositório do seu fork** na variável `GITHUB_REPO_NAME`
+
+2. **Configurar variáveis de usuário e senha**  
+   - Defina as variáveis de ambiente com usuário e senha da sua escolha.  
+   - Configure também no **GitHub -> Settings -> Secrets and Variables -> Actions**
+
+3. Abra o Terminal Bash.
+
+4. Navegue até a pasta onde o script foi salvo com: `cd nome-da-pasta`
+
+5. **Dar permissão de execução ao script**  
+   - No terminal (bash/CLI), execute:  
+     ```bash
+     chmod +x deploy-pingmottu.sh
+     ```
+
+6. **Executar o script**  
+   - Agora rode o script:  
+     ```bash
+     ./deploy-pingmottu.sh
+     ```
+
+7. **Autenticar sua conta no GitHub**  
+   - Durante a execução, será solicitado autenticar.  
+   - Acesse [github.com/login/device](https://github.com/login/device) e insira o código exibido.
+
+8. **Confirmar substituição do workflow**  
+   - Quando aparecer a mensagem de *replace workflow*, digite:  
+     ```
+     y
+     ```
+
+9. **Substituir workflow gerado**  
+   - O Azure criará um workflow padrão.  
+   - Substitua esse arquivo gerado pelo workflow fornecido neste repositório
+   - 🔗 [Clique aqui para acessar o workflow](.github/workflows/main_ping-mottu.yml).
+
+Com isso, o deploy da aplicação no **Azure** estará pronto para uso.
+
+---
