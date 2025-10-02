@@ -79,13 +79,9 @@ Erro: The server name ... is already in use.
 O nome do servidor SQL precisa ser único globalmente no Azure. Basta alterar o nome no script e executar novamente.
 
 ---
-# 🚀 Deploy da Aplicação no Azure
+## 📋 **Deploy da Aplicação**
 
 Este guia mostra como realizar o **deploy da aplicação** utilizando o script fornecido e o GitHub Actions.
-
----
-
-## 📋 **Deploy da Aplicação**
 
 🚀 **Passo a passo:**
 
